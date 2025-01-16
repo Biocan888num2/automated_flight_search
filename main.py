@@ -33,7 +33,7 @@ data_manager.update_destination_codes()
 # ==================== Retrieve your customer emails ====================
 
 customer_data = data_manager.get_customer_emails()
-# Verify the name of your email column in your sheet. Yours may be different from mine
+# Verify the name of email column in sheet
 customer_email_list = [row["whatIsYourEmail?"] for row in customer_data]
 # print(f"Your email list includes {customer_email_list}")
 
