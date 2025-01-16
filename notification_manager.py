@@ -30,12 +30,8 @@ class NotificationManager:
 
         Returns:
         None
-
-        Notes:
-        - Ensure that `TWILIO_VIRTUAL_NUMBER` and `TWILIO_VERIFIED_NUMBER` are correctly set up in
-        your environment (.env file) and correspond with numbers registered and verified in your
-        Twilio account.
-        - The Twilio client (`self.client`) should be initialized and authenticated with your
+        
+        - The Twilio client (`self.client`) should be initialized and authenticated with
         Twilio account credentials prior to using this function when the Notification Manager gets
         initialized.
         """
@@ -47,7 +43,7 @@ class NotificationManager:
         # Prints if successfully sent.
         print(message.sid)
 
-    # Is SMS not working for you or prefer whatsapp? Connect to the WhatsApp Sandbox!
+    # Is SMS not working, or prefer whatsapp? Connect to the WhatsApp Sandbox...
     # https://console.twilio.com/us1/develop/sms/try-it-out/whatsapp-learn
     def send_whatsapp(self, message_body):
         message = self.client.messages.create(
