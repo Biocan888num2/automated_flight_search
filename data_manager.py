@@ -23,11 +23,11 @@ class DataManager:
         response = requests.get(url=self._prices_endpoint, auth=self._authorization)
         data = response.json()
         self.destination_data = data["prices"]
-        # Try importing pretty print and printing the data out again using pprint() to see it formatted.
+        # import 'pretty print' and print the data out again using pprint() to see it more clearly formatted
         # pprint(data)
         return self.destination_data
 
-    # In the DataManager Class make a PUT request and use the row id from sheet_data
+    # In the DataManager Class make PUT request and use row 'id' from 'sheet_data'
     # to update the Google Sheet with the IATA codes
     def update_destination_codes(self):
         for city in self.destination_data:
