@@ -22,26 +22,30 @@ class FlightSearch:
         and 'AMADEUS_SECRET' respectively.
 
         Instance Variables:
-        _api_key (str): The API key for authenticating with Amadeus, sourced from the .env file
-        _api_secret (str): The API secret for authenticating with Amadeus, sourced from the .env file.
-        _token (str): The authentication token obtained by calling the _get_new_token method.
+        _api_key (str): The API key for authenticating with Amadeus (in the '.env' file)
+        _api_secret (str): The API secret for authenticating with Amadeus (in the '.env' file)
+        _token (str): The authentication token obtained by calling the '_get_new_token method'
         """
+        
         self._api_key = os.environ["AMADEUS_API_KEY"]
         self._api_secret = os.environ["AMADEUS_SECRET"]
-        # Getting a new token every time program is run. Could reuse unexpired tokens as an extension.
+        
+        # Getting a new token every time program is run 
+        # Could reuse unexpired tokens as an extension
         self._token = self._get_new_token()
 
     def _get_new_token(self):
         """
         Generates the authentication token used for accessing the Amadeus API and returns it.
 
-        This function makes a POST request to the Amadeus token endpoint with the required
-        credentials (API key and API secret) to obtain a new client credentials token.
-        Upon receiving a response, the function updates the FlightSearch instance's token.
+            >>> This function makes a POST request to the Amadeus token endpoint 
+            >>> Result is obtaining a new client credentials token
+            >>>  When response received: function updates the FlightSearch instance's token
 
-        Returns:
-            str: The new access token obtained from the API response.
+            Returns:
+                str: The new access token obtained from the API response
         """
+        
         # Header with content type as per Amadeus documentation
         header = {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -64,25 +68,23 @@ class FlightSearch:
 
     def get_destination_code(self, city_name):
         """
-        Retrieves the IATA code for a specified city using the Amadeus Location API.
+        Retrieves the IATA code for a specified city using the Amadeus Location API
 
-        Parameters:
-        city_name (str): The name of the city for which to find the IATA code.
+            Parameters:
+                city_name (str): The name of the city for which to find the IATA code
 
-        Returns:
-        str: The IATA code of the first matching city if found; "N/A" if no match is found due to an IndexError,
-        or "Not Found" if no match is found due to a KeyError.
+            Returns:
+                str: The IATA code of the first matching city if found; "N/A" if no match is found due to an IndexError,
+                or "Not Found" if no match is found due to a KeyError
 
-        The function sends a GET request to the IATA_ENDPOINT with a query that specifies the city
-        name and other parameters to refine the search. It then attempts to extract the IATA code
-        from the JSON response.
+                >>> Function sends a GET request to the IATA_ENDPOINT with a query that specifies the city name and other parameters 
+                >>> It then attempts to extract the IATA code from the JSON response
 
-        - If the city is not found in the response data (i.e., the data array is empty, leading to
-        an IndexError), it logs a message indicating that no airport code was found for the city and
-        returns "N/A".
-        - If the expected key is not found in the response (i.e., the 'iataCode' key is missing, leading
-        to a KeyError), it logs a message indicating that no airport code was found for the city
-        and returns "Not Found".
+                >>> If the city is not found in the response data (i.e., the data array is empty, leading toan IndexError)
+                >>> Logs a message indicating that no airport code was found for the city and returns "N/A"
+        
+                >>> If the expected key is not found in the response (i.e., the 'iataCode' key is missing, leading to a KeyError)
+                >>> Logs a message indicating that no airport code was found for the city and returns "Not Found"
         """
 
         print(f"Using this token to get destination {self._token}")
@@ -111,24 +113,24 @@ class FlightSearch:
 
     def check_flights(self, origin_city_code, destination_city_code, from_time, to_time, is_direct=True):
         """
-        Searches for flight options between two cities on specified departure and return dates
-        using the Amadeus API.
+        Searches for flight options between two cities on specified departure and return dates using the Amadeus API
 
         Parameters:
-            origin_city_code (str): The IATA code of the departure city.
-            destination_city_code (str): The IATA code of the destination city.
-            from_time (datetime): The departure date.
-            to_time (datetime): The return date.
-            is_direct (boolean): if it is a direct flight.
+            origin_city_code (str): IATA code departure city
+            destination_city_code (str): IATA code destination city
+            from_time (datetime): departure date
+            to_time (datetime): return date
+            is_direct (boolean): if direct flight
 
         Returns:
-            dict or None: A dictionary containing flight offer data if the query is successful; None
-            if there is an error.
+            dict or None: 
+            >>> 'Dictionary' containing flight offer data if query successful
+            >>> 'None' if an error
 
-        The function constructs a query with the flight search parameters and sends a GET request to
-        the API. It handles the response, checking the status code and parsing the JSON data if the
-        request is successful. If the response status code is not 200, it logs an error message and
-        provides a link to the API documentation for status code details.
+            >>> Function constructs a query with the flight search parameters
+            >>> Sends a GET request to the API 
+            >>> It handles the response, checking the status code and parsing the JSON data if request successful 
+            >>> If response status code not '200': ogs an error message and provides link to API documentation for status code details
         """
 
         # print(f"Using this token to check_flights() {self._token}")
