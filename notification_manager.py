@@ -19,21 +19,22 @@ class NotificationManager:
 
     def send_sms(self, message_body):
         """
-        Sends an SMS message through the Twilio API.
-        This function takes a message body as input and uses the Twilio API to send an SMS from
-        a predefined virtual number (provided by Twilio) to your own "verified" number.
-        It logs the unique SID (Session ID) of the message, which can be used to
-        verify that the message was sent successfully.
+        Sends an SMS message through the Twilio API
+        
+            >>> Function takes a message body as input 
+            >>> Uses Twilio API to send an SMS from virtual number (provided by Twilio) to your own "verified" number
+            >>> It logs the unique SID (Session ID) of the message
+            >>> This can be used to verify that message was sent successfully
 
         Parameters:
-        message_body (str): The text content of the SMS message to be sent.
+            message_body (str): The text content of the SMS message to be sent.
 
         Returns:
-        None
+            None
         
-        - The Twilio client (`self.client`) should be initialized and authenticated with
-        Twilio account credentials prior to using this function when the Notification Manager gets
-        initialized.
+            >>> Twilio client (`self.client`) should be initialized 
+            >>> Then authenticated with Twilio account credentials prior to using this function 
+            >>> Ideally this occurs when the 'Notification Manager' gets initialized
         """
         message = self.client.messages.create(
             from_=self.twilio_virtual_number,
